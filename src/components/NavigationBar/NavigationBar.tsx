@@ -7,10 +7,6 @@ import {useTheme} from "next-themes";
 import {FaMoon, FaSun} from "react-icons/fa";
 import {Avatar} from "@/components/Avatar/Avatar";
 
-// interface NavigationBarProps {
-//     children?: ReactNode
-// }
-
 export default function NavigationBar() {
 
     const {theme, setTheme} = useTheme()
@@ -26,10 +22,10 @@ export default function NavigationBar() {
                 </div>
                 <div className="px-2 flex-grow flex flex-row align-middle justify-center">
                     <NavigationItem href="/">Home</NavigationItem>
-                    <NavigationItem href="/my_home">My Home</NavigationItem>
+                    <NavigationItem href="/household">Households</NavigationItem>
                     <NavigationItem href="/expenses">Expenses</NavigationItem>
                 </div>
-                <div className="flex bg-slate-300 rounded-full">
+                <div className="flex bg-slate-100 rounded-full">
                     <a href="/profile" className="p-2 flex flex-row items-center">
                         <p className="px-2">Muergano</p>
                         <Avatar fullName="Muergan O" width={30}/>
