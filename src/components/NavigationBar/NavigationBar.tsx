@@ -12,13 +12,13 @@ export default function NavigationBar() {
     const {theme, setTheme} = useTheme()
 
     return (
-        <div className="flex flex-col sticky top-0">
+        <div className="flex flex-col sticky top-0 max-h-24">
             <div className="flex flex-row p-2 items-center justify-between bg-gradient-to-br">
                 <div className="px-2">
                     Current Home
                 </div>
                 <div className="px-2">
-                    <Image src="/logo-no-background.png" alt="Casita logo" width={140} height={60}/>
+                    <Image src="/logo-no-background.png" alt="Casita logo" width={130} height={60}/>
                 </div>
                 <div className="px-2 flex-grow flex flex-row align-middle justify-center">
                     <NavigationItem href="/">Home</NavigationItem>
