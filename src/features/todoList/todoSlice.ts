@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Todo } from "@/features/todoList/types";
-import { AppDispatch, AppThunk } from "@/store";
+import { AppDispatch, AppThunk } from "../../store";
 
 const initialState: Todo[] = [];
 
