@@ -10,9 +10,9 @@ export default function ProfileButtonWithAvatar({
   fullName: string;
   avatarSize: number;
 }) {
-  const firstName = fullName.split(" ")[0];
-  const lastNameLetter = fullName.split(" ")[1];
-  const avatar = <Avatar rounded={true} fullName={fullName} width={30} />;
+  const avatar = (
+    <Avatar rounded={true} fullName={fullName} width={avatarSize} />
+  );
 
   return (
     <div className="flex flex-row items-center">
