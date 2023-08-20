@@ -3,6 +3,7 @@ import { Household } from "@/types/Household";
 
 export interface HouseholdState {
   activeHousehold?: Household;
+  selectedHousehold?: Household;
   households: Household[];
 }
 
@@ -20,8 +21,12 @@ const householdSlice = createSlice({
     setActiveHousehold: (state, action: PayloadAction<Household>) => {
       state.activeHousehold = action.payload;
     },
+    setSelectedHousehold: (state, action: PayloadAction<Household>) => {
+      state.selectedHousehold = action.payload;
+    },
   },
 });
 
-export const { setActiveHousehold, setHouseholds } = householdSlice.actions;
+export const { setActiveHousehold, setHouseholds, setSelectedHousehold } =
+  householdSlice.actions;
 export default householdSlice.reducer;

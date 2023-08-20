@@ -1,12 +1,8 @@
-export interface HouseholdMember {
-  name: string;
-  lastname: string;
-  avatar: string;
-}
+import { User } from "@/types/User";
 
 export interface Household {
   id: string;
   address: string;
   city: string;
-  members: HouseholdMember[];
+  members: User[];
 }

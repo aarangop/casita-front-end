@@ -5,8 +5,8 @@ import Image from "next/image";
 import NavigationItem from "@/components/NavigationBar/NavigationItem";
 import { useTheme } from "next-themes";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { Avatar } from "@/components/Avatar/Avatar";
 import { useAppSelector } from "@/store/hooks";
+import ProfileButtonWithAvatar from "@/components/Avatar/ProfileButtonWithAvatar";
 
 export default function NavigationBar() {
   const { theme, setTheme } = useTheme();
@@ -36,12 +36,11 @@ export default function NavigationBar() {
           <NavigationItem href="/household">Households</NavigationItem>
           <NavigationItem href="/expenses">Expenses</NavigationItem>
         </div>
-        <div className="flex bg-slate-100 rounded-full">
-          <a href="/profile" className="p-2 flex flex-row items-center">
-            <p className="px-2">Muergano</p>
-            <Avatar fullName="Muergan O" width={30} />
-          </a>
-        </div>
+        <ProfileButtonWithAvatar
+          alias="muergano"
+          fullName={"Andres Arango"}
+          avatarSize={50}
+        />
         <div>
           <button
             className="block px-2 rounded-full"

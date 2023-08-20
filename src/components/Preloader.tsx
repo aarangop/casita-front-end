@@ -5,6 +5,7 @@ import { store } from "@/store";
 import {
   setActiveHousehold,
   setHouseholds,
+  setSelectedHousehold,
 } from "@/store/features/householdSlice";
 
 export default function Preloader({
@@ -19,6 +20,7 @@ export default function Preloader({
   useEffect(() => {
     store.dispatch(setActiveHousehold(activeHousehold));
     store.dispatch(setHouseholds(households));
+    store.dispatch(setSelectedHousehold(activeHousehold));
   });
 
   if (!loaded.current) {

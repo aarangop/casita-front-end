@@ -33,8 +33,10 @@ export default async function RootLayout(props: ILayoutProps) {
         {/*Funnel state through the Preloader component!*/}
         <Preloader activeHousehold={activeHousehold} households={data} />
         <Providers>
-          <NavigationBar />
-          {props.children}
+          <div className="min-h-screen flex flex-col justify-between">
+            <NavigationBar />
+            {props.children}
+          </div>
         </Providers>
       </body>
     </html>
