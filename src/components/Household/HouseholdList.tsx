@@ -11,14 +11,19 @@ export default function HouseholdList() {
   const dispatch = useAppDispatch();
 
   const households = useAppSelector((state) => state.household.households);
+
+  const fetchNewHousehold = async () => {
+    try {
+      const req = await fetch("http://localhost:3000/api/household");
+      return await req.json();
+    } catch (err) {
+      console.log("Error fetching dummy household:", err);
+    }
+  };
   const createNewHousehold = () => {
-    const newHousehold = {
-      id: "newHouseholdId",
-      city: "New City",
-      address: "New Street 1",
-      members: [],
-    } as Household;
-    dispatch(setSelectedHousehold(newHousehold));
+    fetchNewHousehold().then((household) => {
+      dispatch(setSelectedHousehold(household));
+    });
   };
   return (
     <div className="grow flex min-h-full flex-col bg-secondary p-2 rounded shadow-md">

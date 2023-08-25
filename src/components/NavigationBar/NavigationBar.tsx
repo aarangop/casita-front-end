@@ -39,7 +39,7 @@ export default function NavigationBar() {
         <ProfileButtonWithAvatar
           alias="muergano"
           fullName={"Andres Arango"}
-          avatarSize={50}
+          avatarSize={30}
         />
         <div>
           <button
