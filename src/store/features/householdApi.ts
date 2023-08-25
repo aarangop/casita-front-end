@@ -13,17 +13,15 @@ export const householdApi = createApi({
     postNewHousehold: builder.mutation<Household, Household>({
       query: (payload) => ({
         url: "household",
-        method: "post",
+        method: "POST",
         body: payload,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
       }),
+      invalidatesTags: [{ type: "Household", id: "LIST" }],
     }),
     updateHousehold: builder.mutation<Household, Household>({
       query: (payload) => ({
-        url: "household",
-        method: "post",
+        url: `/household/${payload.id}`,
+        method: "PUT",
         body: payload,
         headers: {
           "Content-type": "application/json; charset=UTF-8",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppSelector } from "@/store/hooks";
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import FormLabel from "@/components/Form/FormLabel";
 import FormInput from "@/components/Form/FormInput";
 import FormTextInput from "@/components/Form/FormTextInput";
@@ -21,7 +21,9 @@ export default function HouseholdAddEdit() {
   const [addNewHousehold] = householdApi.usePostNewHouseholdMutation();
   const [updateHousehold] = householdApi.useUpdateHouseholdMutation();
 
-  const onSave = () => {
+  const onSave = (event: MouseEventHandler<HTMLButtonElement>) => {
+    event.preventDefault();
+
     const household = {
       id: selectedHousehold ? selectedHousehold.id : null,
       address,
