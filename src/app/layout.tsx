@@ -22,11 +22,13 @@ export interface ILayoutProps {
 }
 
 export default async function RootLayout(props: ILayoutProps) {
-  const req = await fetch("http://localhost:8080/households.json");
+  const req = await fetch("http://localhost:8001/household");
   const data = await req.json();
   const activeHousehold = data[0];
+
   store.dispatch(setHouseholds(data));
   store.dispatch(setActiveHousehold(activeHousehold));
+
   return (
     <html lang="en">
       <body className={inter.className}>

@@ -1,8 +1,11 @@
-import { User } from "@/types/User";
+import { z } from "zod";
 
-export interface Household {
-  id: string;
-  address: string;
-  city: string;
-  members: User[];
-}
+export const householdSchema = z.object({
+  _id: z.string(),
+  address: z.string(),
+  city: z.string(),
+  country: z.string(),
+  members: z.any(),
+});
+
+export type Household = z.infer<typeof householdSchema>;
