@@ -3,12 +3,11 @@
 import { useAppSelector } from "@/store/hooks";
 import React from "react";
 import FormLabel from "@/components/Form/FormLabel";
-import FormInput from "@/components/Form/FormInput";
-import FormTextInput from "@/components/Form/FormTextInput";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import FormTextInput from "@/components/Form/FormInput";
 
 const validationSchema = z.object({
   address: z.string().min(2, "Address is required"),
@@ -16,7 +15,7 @@ const validationSchema = z.object({
   country: z.string().min(1, "Country is required"),
 });
 
-type ValidationSchema = z.infer<typeof validationSchema>;
+type HouseholdSchema = z.infer<typeof validationSchema>;
 
 export default function HouseholdAddEdit() {
   const {
@@ -24,7 +23,7 @@ export default function HouseholdAddEdit() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ValidationSchema>({
+  } = useForm<HouseholdSchema>({
     resolver: zodResolver(validationSchema),
   });
 
@@ -33,8 +32,7 @@ export default function HouseholdAddEdit() {
     (state) => state.household.selectedHousehold,
   );
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<HouseholdSchema> = (data) => {
     reset();
   };
 
@@ -50,26 +48,29 @@ export default function HouseholdAddEdit() {
       >
         <div className="mb-4 max-w-fit">
           <FormLabel htmlFor="address">Address</FormLabel>
-          <FormInput
+          <FormTextInput
             id="address"
-            type="text"
-            placeholder="Address"
-            register={register}
+            name="address"
+            register={register("address")}
+            error={errors.address}
           />
-          {errors.address && <span>{errors.address.message}</span>}
         </div>
         <div className="flex flex-row">
           <div className="mb-4 max-w-fit">
             <FormLabel htmlFor="city">City</FormLabel>
-            <FormTextInput id="city" placeholder="City" {...register("city")} />
-            {errors.city && <span>{errors.city.message}</span>}
+            <FormTextInput
+              id="city"
+              name="city"
+              register={register("city")}
+              error={errors.city}
+            />
           </div>
           <div className="ml-4 mb-4 max-w-fit">
             <FormLabel htmlFor="country">Country</FormLabel>
             <FormTextInput
               id="country"
-              placeholder="Country"
-              {...register("country")}
+              register={register("country")}
+              error={errors.country}
             />
           </div>
         </div>

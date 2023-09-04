@@ -1,19 +1,23 @@
 "use client";
 
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { InputHTMLAttributes } from "react";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form"; // interface FormInputProps<T extends FieldValues>
 
-interface FormInputProps<TFormValues extends FieldValues> {
-  register: UseFormRegister<TFormValues>;
+interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  register: UseFormRegisterReturn;
+  error?: FieldError;
 }
 
-export default function FormInput({
-  register,
-  ...rest
-}: FormInputProps<FieldValues>) {
+export default function FormInput({ register, error }: FormInputProps) {
   return (
-    <input
-      {...register("name")}
-      className="appearance-none dark:text-slate-50 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    />
+    <div>
+      <input
+        className={`appearance-none ${
+          error ? "bg-error bg-opacity-20 border-error" : null
+        } dark:text-slate-50 border rounded w-full py-2 px-3 text-gray-700 leading-tight`}
+        {...register}
+      />
+      {error && <p className="text-error">{error.message}</p>}
+    </div>
   );
 }
