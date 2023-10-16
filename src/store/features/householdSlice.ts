@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Household } from "@/types/Household";
+import { Household } from "@/store/casitaApi";
 
 export interface HouseholdState {
   activeHousehold?: Household;

@@ -1,15 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import HouseholdReducer from "@/store/features/householdSlice";
-import { householdApi } from "@/store/features/householdApi";
+import { casitaApi } from "@/store/casitaApi";
 
 export const store = configureStore({
   reducer: {
     household: HouseholdReducer,
-    householdApi: householdApi.reducer,
+    // [householdApi.reducerPath]: householdApi.reducer,
+    [casitaApi.reducerPath]: casitaApi.reducer,
   },
   // Add api middleware to enable caching, invalidation, polling, etc.
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(householdApi.middleware);
+    return getDefaultMiddleware().concat(
+      // householdApi.middleware,
+      casitaApi.middleware,
+    );
   },
 });
 

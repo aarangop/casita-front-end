@@ -2,16 +2,10 @@
 
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { Household } from "@/types/Household";
 import HouseholdListItem from "@/components/Household/HouseholdListItem";
-import { setSelectedHousehold } from "@/store/features/householdSlice";
+import { Household, useGetHouseholdsQuery } from "@/store/casitaApi";
 
 export default function HouseholdList() {
-  const dispatch = useAppDispatch();
-
-  const households = useAppSelector((state) => state.household.households);
-
   const fetchNewHousehold = async () => {
     try {
       const req = await fetch("http://localhost:3000/api/household");
@@ -20,11 +14,15 @@ export default function HouseholdList() {
       console.log("Error fetching dummy household:", err);
     }
   };
-  const createNewHousehold = () => {
-    fetchNewHousehold().then((household) => {
-      dispatch(setSelectedHousehold(household));
-    });
-  };
+  const {
+    data: households,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetHouseholdsQuery();
+
+  const createNewHousehold = () => {};
   return (
     <div className="grow flex min-h-full flex-col bg-secondary p-2 rounded shadow-md">
       <div className="flex flex-col grow overflow-hidden">
@@ -32,7 +30,7 @@ export default function HouseholdList() {
           My Households
         </h2>
         <div className="flex-col grow">
-          {households.map((household: Household, index: number) => (
+          {households?.map((household: Household, index: number) => (
             <HouseholdListItem
               household={household}
               key={`household-${index}`}
