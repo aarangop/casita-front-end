@@ -8,14 +8,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormTextInput from "@/components/Form/FormTextInput";
-import { useCreateNewHouseholdMutation } from "@/store/features/householdApi";
-
-const householdValidationSchema = z.object({
-  _id: z.string().optional(),
-  address: z.string().min(2, "Address is required"),
-  city: z.string().min(1, "Street is required"),
-  country: z.string().min(1, "Country is required"),
-});
+import { useCreateHouseholdMutation } from "@/store/casitaApi";
+import { householdValidationSchema } from "@/schemas/Household";
 
 type HouseholdSchema = z.infer<typeof householdValidationSchema>;
 
@@ -33,10 +27,10 @@ export default function HouseholdAddEdit() {
     (state) => state.household.selectedHousehold,
   );
 
-  const [createNewHousehold, result] = useCreateNewHouseholdMutation();
+  const [createNewHousehold, result] = useCreateHouseholdMutation();
 
   const onSubmit: SubmitHandler<HouseholdSchema> = async (data) => {
-    const payload = await createNewHousehold(data);
+    const payload = await createNewHousehold({ household: data });
     console.log(payload);
   };
 
@@ -44,7 +38,7 @@ export default function HouseholdAddEdit() {
     (result.isLoading && <div>loading...</div>) || (
       <div className="flex grow flex-col min-w-full min-h-full shadow-md rounded p-4">
         <h1 className="font-semibold">
-          {selectedHousehold ? selectedHousehold.address : ""} -{" "}
+          {selectedHousehold ? selectedHousehold.street : ""} -{" "}
           {selectedHousehold ? selectedHousehold.city : ""}
         </h1>
         <form
@@ -56,7 +50,7 @@ export default function HouseholdAddEdit() {
             <FormTextInput
               id="address"
               name="address"
-              register={register("address")}
+              register={register("street")}
               error={errors.address}
             />
           </div>

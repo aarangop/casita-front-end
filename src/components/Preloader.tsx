@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { Household } from "@/types/Household";
+import { Household } from "@/schemas/Household";
 import { store } from "@/store";
 import {
   setActiveHousehold,
