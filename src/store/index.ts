@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import HouseholdReducer from "@/store/features/householdSlice";
 import { casitaApi } from "@/store/casitaApi";
+import { PreloadedState } from "redux";
 
 export const store = configureStore({
   reducer: {
@@ -13,9 +14,14 @@ export const store = configureStore({
   },
 });
 
+export function setupStore(preloadedState?: PreloadedState<RootState>) {
+  return store;
+}
+
 if (typeof window !== "undefined" && window.Cypress) {
   window.Cypress.store = store;
 }
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof setupStore>;

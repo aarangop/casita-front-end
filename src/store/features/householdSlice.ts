@@ -7,7 +7,7 @@ export interface HouseholdState {
   households: Household[];
 }
 
-const householdInitialState: HouseholdState = {
+export const householdInitialState: HouseholdState = {
   households: [],
   activeHousehold: null,
   selectedHousehold: null,
