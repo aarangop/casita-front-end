@@ -1,53 +1,90 @@
 import { emptySplitApi as api } from "./emptyApi";
-const injectedRtkApi = api.injectEndpoints({
-  endpoints: (build) => ({
-    getHouseholdById: build.query<
-      GetHouseholdByIdApiResponse,
-      GetHouseholdByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/households/${queryArg.id}` }),
-    }),
-    putHousehold: build.mutation<PutHouseholdApiResponse, PutHouseholdApiArg>({
-      query: (queryArg) => ({
-        url: `/api/households/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.household,
+export const addTagTypes = [
+  "households-controller",
+  "users-controller",
+] as const;
+const injectedRtkApi = api
+  .enhanceEndpoints({
+    addTagTypes,
+  })
+  .injectEndpoints({
+    endpoints: (build) => ({
+      getHouseholdById: build.query<
+        GetHouseholdByIdApiResponse,
+        GetHouseholdByIdApiArg
+      >({
+        query: (queryArg) => ({ url: `/api/households/${queryArg.id}` }),
+        providesTags: ["households-controller"],
+      }),
+      putHousehold: build.mutation<PutHouseholdApiResponse, PutHouseholdApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/api/households/${queryArg.id}`,
+            method: "PUT",
+            body: queryArg.household,
+          }),
+          invalidatesTags: ["households-controller"],
+        }
+      ),
+      deleteHousehold: build.mutation<
+        DeleteHouseholdApiResponse,
+        DeleteHouseholdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/households/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["households-controller"],
+      }),
+      updateHouseholdMembers: build.mutation<
+        UpdateHouseholdMembersApiResponse,
+        UpdateHouseholdMembersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/households/${queryArg.id}/household_members`,
+          method: "PUT",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["households-controller"],
+      }),
+      getHouseholds: build.query<GetHouseholdsApiResponse, GetHouseholdsApiArg>(
+        {
+          query: () => ({ url: `/api/households` }),
+          providesTags: ["households-controller"],
+        }
+      ),
+      createHousehold: build.mutation<
+        CreateHouseholdApiResponse,
+        CreateHouseholdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/households`,
+          method: "POST",
+          body: queryArg.household,
+        }),
+        invalidatesTags: ["households-controller"],
+      }),
+      getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
+        query: () => ({ url: `/users` }),
+        providesTags: ["users-controller"],
+      }),
+      getUserById: build.query<GetUserByIdApiResponse, GetUserByIdApiArg>({
+        query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
+        providesTags: ["users-controller"],
+      }),
+      getUsersByUsernameOrEmail: build.query<
+        GetUsersByUsernameOrEmailApiResponse,
+        GetUsersByUsernameOrEmailApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/users/email_or_username/`,
+          params: { term: queryArg.term },
+        }),
+        providesTags: ["users-controller"],
       }),
     }),
-    getHouseholds: build.query<GetHouseholdsApiResponse, GetHouseholdsApiArg>({
-      query: () => ({ url: `/api/households` }),
-    }),
-    createHousehold: build.mutation<
-      CreateHouseholdApiResponse,
-      CreateHouseholdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/households`,
-        method: "POST",
-        body: queryArg.household,
-      }),
-    }),
-    getAllUsers: build.query<GetAllUsersApiResponse, GetAllUsersApiArg>({
-      query: () => ({ url: `/users` }),
-    }),
-    getUserById: build.query<GetUserByIdApiResponse, GetUserByIdApiArg>({
-      query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
-    }),
-    getAllHouseholdMembers: build.query<
-      GetAllHouseholdMembersApiResponse,
-      GetAllHouseholdMembersApiArg
-    >({
-      query: () => ({ url: `/api/household_members` }),
-    }),
-    getHouseholdMember: build.query<
-      GetHouseholdMemberApiResponse,
-      GetHouseholdMemberApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/household_members/${queryArg.id}` }),
-    }),
-  }),
-  overrideExisting: false,
-});
+    overrideExisting: false,
+  });
 export { injectedRtkApi as casitaApi };
 export type GetHouseholdByIdApiResponse = /** status 200 OK */ Household;
 export type GetHouseholdByIdApiArg = {
@@ -58,24 +95,30 @@ export type PutHouseholdApiArg = {
   id: string;
   household: Household;
 };
+export type DeleteHouseholdApiResponse = unknown;
+export type DeleteHouseholdApiArg = {
+  id: string;
+};
+export type UpdateHouseholdMembersApiResponse = /** status 200 OK */ Household;
+export type UpdateHouseholdMembersApiArg = {
+  id: string;
+  body: string[];
+};
 export type GetHouseholdsApiResponse = /** status 200 OK */ Household[];
 export type GetHouseholdsApiArg = void;
 export type CreateHouseholdApiResponse = /** status 200 OK */ Household;
 export type CreateHouseholdApiArg = {
   household: Household;
 };
-export type GetAllUsersApiResponse = /** status 200 OK */ object;
-export type GetAllUsersApiArg = void;
+export type GetUsersApiResponse = /** status 200 OK */ User[];
+export type GetUsersApiArg = void;
 export type GetUserByIdApiResponse = /** status 200 OK */ User;
 export type GetUserByIdApiArg = {
   id: string;
 };
-export type GetAllHouseholdMembersApiResponse = /** status 200 OK */ object;
-export type GetAllHouseholdMembersApiArg = void;
-export type GetHouseholdMemberApiResponse =
-  /** status 200 OK */ HouseholdMember;
-export type GetHouseholdMemberApiArg = {
-  id: string;
+export type GetUsersByUsernameOrEmailApiResponse = /** status 200 OK */ User[];
+export type GetUsersByUsernameOrEmailApiArg = {
+  term: string;
 };
 export type User = {
   id: string;
@@ -83,11 +126,7 @@ export type User = {
   lastName: string;
   nickname: string;
   username: string;
-  password: string;
-};
-export type HouseholdMember = {
-  id: string;
-  user: User;
+  email: string;
 };
 export type Household = {
   id: string;
@@ -96,15 +135,21 @@ export type Household = {
   zipCode: string;
   city: string;
   country: string;
-  householdMembers: HouseholdMember[];
+  householdMembers: User[];
 };
 export const {
   useGetHouseholdByIdQuery,
+  useLazyGetHouseholdByIdQuery,
   usePutHouseholdMutation,
+  useDeleteHouseholdMutation,
+  useUpdateHouseholdMembersMutation,
   useGetHouseholdsQuery,
+  useLazyGetHouseholdsQuery,
   useCreateHouseholdMutation,
-  useGetAllUsersQuery,
+  useGetUsersQuery,
+  useLazyGetUsersQuery,
   useGetUserByIdQuery,
-  useGetAllHouseholdMembersQuery,
-  useGetHouseholdMemberQuery,
+  useLazyGetUserByIdQuery,
+  useGetUsersByUsernameOrEmailQuery,
+  useLazyGetUsersByUsernameOrEmailQuery,
 } = injectedRtkApi;

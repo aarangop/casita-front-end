@@ -6,7 +6,8 @@ const config: ConfigFile = {
   apiImport: "emptySplitApi",
   outputFile: "./src/store/casitaApi.ts",
   exportName: "casitaApi",
-  hooks: true,
+  hooks: { queries: true, lazyQueries: true, mutations: true },
+  tag: true,
 };
 
 export default config;
