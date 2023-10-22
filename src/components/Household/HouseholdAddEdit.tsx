@@ -139,10 +139,18 @@ export default function HouseholdAddEdit({
           />
         </div>
         <div className="flex flex-row space-x-4">
-          <PrimaryButton className="w-fit" type="submit">
+          <PrimaryButton
+            dataCy="save-household-button"
+            className="w-fit"
+            type="submit"
+          >
             Save
           </PrimaryButton>
-          <PrimaryButton className="bg-error" onClick={deleteHousehold}>
+          <PrimaryButton
+            dataCy="delete-household-button"
+            className="bg-error"
+            onClick={deleteHousehold}
+          >
             Delete
           </PrimaryButton>
         </div>

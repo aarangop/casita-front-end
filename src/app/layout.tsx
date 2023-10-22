@@ -31,7 +31,7 @@ export default async function RootLayout(props: ILayoutProps) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} id="root">
         {/*Funnel state through the Preloader component!*/}
         <Preloader activeHousehold={activeHousehold} households={data} />
         <Providers>

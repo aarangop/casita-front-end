@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { Household } from "@/schemas/Household";
 import { store } from "@/store";
 import {
   setActiveHousehold,
   setHouseholds,
   setSelectedHousehold,
 } from "@/store/features/householdSlice";
+import { Household } from "@/store/casitaApi";
 
 export default function Preloader({
   activeHousehold,

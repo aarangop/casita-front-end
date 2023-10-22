@@ -28,13 +28,25 @@ export default function NavigationBar() {
         </div>
         <div className="px-2 font-semibold">
           {activeHousehold
-            ? `${activeHousehold.address} - ${activeHousehold.city}`
+            ? `${activeHousehold.street} ${activeHousehold.houseNumber} - ${activeHousehold.city}`
             : "No active household"}
         </div>
         <div className="px-2 flex-grow flex flex-row align-middle justify-center">
-          <NavigationItem href="/">Home</NavigationItem>
-          <NavigationItem href="/household">Households</NavigationItem>
-          <NavigationItem href="/expenses">Expenses</NavigationItem>
+          <NavigationItem dataCy="header-navigation-home" href="/">
+            Home
+          </NavigationItem>
+          <NavigationItem
+            dataCy="header-navigation-household"
+            href="/household"
+          >
+            Households
+          </NavigationItem>
+          <NavigationItem
+            dataCy="header-navigation-item-expenses"
+            href="/expenses"
+          >
+            Expenses
+          </NavigationItem>
         </div>
         <ProfileButtonWithAvatar
           alias="muergano"

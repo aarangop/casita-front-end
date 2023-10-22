@@ -17,7 +17,7 @@ export default function HouseholdList({
         <h2 className="grow-0 p-4 sticky top-0 font-semibold text-slate-50">
           My Households
         </h2>
-        <div className="flex-col grow">
+        <div className="flex-col grow overflow-hidden">
           {households.map((household: Household, index: number) => (
             <HouseholdListItem
               isActiveHousehold={

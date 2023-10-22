@@ -1,0 +1,9 @@
+{
+  "id": "MyTestHousehold",
+  "street": "Test Street",
+  "houseNumber": "42",
+  "zipCode": "4242",
+  "city": "TestCity",
+  "country": "TestLand",
+  "householdMembers": []
+}

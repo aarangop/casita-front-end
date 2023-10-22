@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "es5",
+    "lib": [
+      "es5",
+      "dom"
+    ],
+    "types": [
+      "cypress",
+      "node",
+      "./support",
+      "cypress-react-selector"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "../node_modules/cypress"
+  ]
+}

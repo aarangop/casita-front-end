@@ -27,7 +27,11 @@ export default function NewHouseholdButton() {
     });
   };
   return (
-    <PrimaryButton className="min-w-full" onClick={createNewHousehold}>
+    <PrimaryButton
+      dataCy={"new-household-button"}
+      className="min-w-full"
+      onClick={createNewHousehold}
+    >
       New Household
     </PrimaryButton>
   );
