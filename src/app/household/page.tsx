@@ -1,23 +1,26 @@
 "use client";
 
 import HouseholdList from "@/features/Household/HouseholdList";
-import { useGetHouseholdsQuery } from "@/store/casitaApi";
+import {
+  useDeleteHouseholdMutation,
+  useGetHouseholdsQuery,
+  usePutHouseholdMutation,
+} from "@/store/casitaApi";
 import NewHouseholdButton from "@/features/Household/NewHouseholdButton";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import NewHouseholdDialog from "@/features/Household/NewHouseholdDialog";
 import { useState } from "react";
-import HouseholdForm from "@/features/Household/HouseholdForm";
+import HouseholdForm, {
+  HouseholdSchema,
+} from "@/features/Household/HouseholdForm";
+import { setSelectedHousehold } from "@/store/features/householdSlice";
 
 export default function HouseholdRoot() {
-  const {
-    data: households,
-    // isLoading,
-    isSuccess,
-    // isError,
-    // error,
-  } = useGetHouseholdsQuery();
+  const { data: households, isSuccess } = useGetHouseholdsQuery();
   const [newHouseholdDialogIsOpen, setNewHouseholdDialogIsOpen] =
     useState(false);
+
+  const dispatch = useAppDispatch();
 
   const activeHousehold = useAppSelector(
     (state) => state.household.activeHousehold,
@@ -26,9 +29,32 @@ export default function HouseholdRoot() {
     (state) => state.household.selectedHousehold,
   );
 
-  const saveHousehold = () => {};
+  const [triggerUpdateHousehold, updateHouseholdResult] =
+    usePutHouseholdMutation();
+  const [triggerDeleteHousehold, deleteHouseholdResult] =
+    useDeleteHouseholdMutation();
+  const saveHousehold = async (data: HouseholdSchema) => {
+    if (selectedHousehold) {
+      console.log(selectedHousehold.id);
+      const res = await triggerUpdateHousehold({
+        id: selectedHousehold.id!!,
+        household: {
+          householdMembers: selectedHousehold.householdMembers,
+          ...data,
+        },
+      });
+      if (res && "data" in res) {
+        console.log(res.data);
+        dispatch(setSelectedHousehold(res.data));
+      }
+    }
+  };
   const discardChanges = () => {};
-  const deleteHousehold = () => {};
+  const deleteHousehold = () => {
+    if (selectedHousehold) {
+      triggerDeleteHousehold({ id: selectedHousehold.id! });
+    }
+  };
 
   const selectedHouseholdHeaderText = useAppSelector((state) =>
     state.household.selectedHousehold
@@ -49,7 +75,6 @@ export default function HouseholdRoot() {
           dataTestId="household-new-household-button"
           onClick={() => {
             setNewHouseholdDialogIsOpen(true);
-            console.log("Opening dialog!");
           }}
         />
       </div>
@@ -62,6 +87,7 @@ export default function HouseholdRoot() {
             onSubmit={saveHousehold}
             onDiscard={discardChanges}
             onDelete={deleteHousehold}
+            household={selectedHousehold!!}
           />
         </div>
       </div>

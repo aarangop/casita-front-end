@@ -65,11 +65,11 @@ const injectedRtkApi = api
         invalidatesTags: ["households-controller"],
       }),
       getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
-        query: () => ({ url: `/users` }),
+        query: () => ({ url: `/api/users` }),
         providesTags: ["users-controller"],
       }),
       getUserById: build.query<GetUserByIdApiResponse, GetUserByIdApiArg>({
-        query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
+        query: (queryArg) => ({ url: `/api/users/${queryArg.id}` }),
         providesTags: ["users-controller"],
       }),
       getUsersByUsernameOrEmail: build.query<
@@ -77,7 +77,7 @@ const injectedRtkApi = api
         GetUsersByUsernameOrEmailApiArg
       >({
         query: (queryArg) => ({
-          url: `/users/email_or_username/`,
+          url: `/api/users/email_or_username/`,
           params: { term: queryArg.term },
         }),
         providesTags: ["users-controller"],
@@ -126,10 +126,9 @@ export type User = {
   lastName: string;
   nickname: string;
   username: string;
-  email: string;
 };
 export type Household = {
-  id: string;
+  id?: string;
   street: string;
   houseNumber: string;
   zipCode: string;

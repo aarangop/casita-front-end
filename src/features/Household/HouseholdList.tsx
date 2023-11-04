@@ -4,7 +4,6 @@ import { Household } from "@/store/casitaApi";
 
 export default function HouseholdList({
   households,
-  activeHousehold,
   className,
 }: {
   households: Household[];

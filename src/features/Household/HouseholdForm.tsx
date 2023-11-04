@@ -1,28 +1,29 @@
-import {useEffect, useState} from "react";
+import {MouseEventHandler} from "react";
 import FormLabel from "@/components/Form/FormLabel";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 import FormTextInput from "@/components/Form/FormTextInput";
 import {PrimaryButton} from "@/components/Button/PrimaryButton";
 import {DestructorButton} from "@/components/Button/DestructorButton";
 import {Household} from "@/store/casitaApi";
+import {DestructorButtonSecondary} from "@/components/Button/DestructorButtonSecondary";
 
 // Define a validation schema for Household
 export const newHouseholdValidationSchema = z.object({
   id: z.string().optional(),
   street: z.string().min(2, "A street is required"),
   houseNumber: z.string().min(1, "A house number is required"),
-  zipCode: z.string().min(4, "Zip code is required"),
-  city: z.string().min(1, "Street is required"),
-  country: z.string().min(1, "Country is required"),
+  zipCode: z.string().min(4, "A zip code is required"),
+  city: z.string().min(1, "A city is required"),
+  country: z.string().min(1, "A country is required"),
 });
 
 export type HouseholdSchema = z.infer<typeof newHouseholdValidationSchema>;
 
 interface HouseholdFormProps {
   className?: string;
-  onSubmit: () => void;
+  onSubmit: (data: HouseholdSchema) => void;
   onDiscard?: () => void | null;
   onDelete?: (() => void) | null;
   household?: Household;
@@ -35,35 +36,41 @@ export default function HouseholdForm({
   onDelete,
   household,
 }: HouseholdFormProps) {
-  // Define state for the controlled input.
-  let [street, setStreet] = useState("");
-  let [houseNumber, setHouseNumber] = useState("");
   // React-hook-form hook call.
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    control,
   } = useForm<HouseholdSchema>({
     resolver: zodResolver(newHouseholdValidationSchema),
+    defaultValues: household,
   });
 
-  useEffect(() => {
-    if (household) {
-      setStreet(household.street);
-      setHouseNumber(household.houseNumber);
-    }
-  }, [household]);
+  const discard: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    reset();
+    if (onDiscard) onDiscard();
+  };
+  const submit: SubmitHandler<HouseholdSchema> = (data) => {
+    reset();
+    onSubmit(data);
+  };
+  const handleDelete: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    reset();
+    if (onDelete) onDelete();
+  };
   return (
     <form
       className={`flex flex-col space-y-10 dark:bg-dark-2 p-2 w-fit rounded-lg ${className}`}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(submit)}
     >
       <div className="flex flex-row space-x-2 ">
         <div className="flex flex-col ">
           <FormLabel htmlFor="street">Street</FormLabel>
           <FormTextInput
+            defaultValue={household?.street}
             dataTestId="household-street"
             register={register("street")}
             error={errors.street}
@@ -72,6 +79,7 @@ export default function HouseholdForm({
         <div className="flex flex-col">
           <FormLabel htmlFor="houseNumber">House Number</FormLabel>
           <FormTextInput
+            defaultValue={household?.houseNumber}
             register={register("houseNumber")}
             error={errors.houseNumber}
           />
@@ -80,11 +88,16 @@ export default function HouseholdForm({
       <div className="flex flex-row space-x-2">
         <div className="flex flex-col">
           <FormLabel htmlFor="city">City</FormLabel>
-          <FormTextInput register={register("city")} error={errors.city} />
+          <FormTextInput
+            defaultValue={household?.city}
+            register={register("city")}
+            error={errors.city}
+          />
         </div>
         <div className="flex flex-col">
           <FormLabel htmlFor="zipCode">ZIP Code</FormLabel>
           <FormTextInput
+            defaultValue={household?.zipCode}
             register={register("zipCode")}
             error={errors.zipCode}
           />
@@ -94,6 +107,7 @@ export default function HouseholdForm({
         <div className="flex flex-col">
           <FormLabel htmlFor="country">Country</FormLabel>
           <FormTextInput
+            defaultValue={household?.country}
             register={register("country")}
             error={errors.country}
           />
@@ -110,20 +124,20 @@ export default function HouseholdForm({
         {onDiscard && (
           <DestructorButton
             className="w-32"
-            onClick={onDiscard}
+            onClick={discard}
             dataTestId={"household-new-household-dialog-discard-button"}
           >
             Discard
           </DestructorButton>
         )}
         {onDelete && (
-          <DestructorButton
+          <DestructorButtonSecondary
             className="w-32"
-            onClick={onDelete}
+            onClick={handleDelete}
             dataTestId="household-new-household-dialog-delete-button"
           >
             Delete
-          </DestructorButton>
+          </DestructorButtonSecondary>
         )}
       </div>
     </form>

@@ -4,6 +4,8 @@ import HouseholdForm, {
 } from "@/features/Household/HouseholdForm";
 import { SubmitHandler } from "react-hook-form";
 import { useCreateHouseholdMutation } from "@/store/casitaApi";
+import { useAppDispatch } from "@/store/hooks";
+import { setSelectedHousehold } from "@/store/features/householdSlice";
 
 interface NewHouseholdDialogProps extends BaseDialogProps {
   isOpen: boolean;
@@ -16,13 +18,12 @@ export default function NewHouseholdDialog({
   dataTestId,
 }: NewHouseholdDialogProps) {
   const [createHousehold, result] = useCreateHouseholdMutation();
+  const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<HouseholdSchema> = async (data) => {
     const res = await createHousehold({
-      household: {
-        id: "0",
-        ...data,
-      },
+      household: data,
     });
+    dispatch(setSelectedHousehold(res.data));
     onClose();
   };
 
