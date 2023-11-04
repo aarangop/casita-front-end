@@ -4,12 +4,6 @@ import { Inter } from "next/font/google";
 import React, { ReactNode } from "react";
 import { Providers } from "@/app/providers";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
-import Preloader from "@/components/Preloader";
-import { store } from "@/store";
-import {
-  setActiveHousehold,
-  setHouseholds,
-} from "@/store/features/householdSlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,18 +16,11 @@ export interface ILayoutProps {
 }
 
 export default async function RootLayout(props: ILayoutProps) {
-  const req = await fetch("http://localhost:8001/household");
-  const data = await req.json();
-  const activeHousehold = data[0];
-
-  store.dispatch(setHouseholds(data));
-  store.dispatch(setActiveHousehold(activeHousehold));
-
   return (
     <html lang="en">
-      <body className={inter.className} id="root">
+      <body className={`${inter.className} dark:bg-dark-1`} id="root">
         {/*Funnel state through the Preloader component!*/}
-        <Preloader activeHousehold={activeHousehold} households={data} />
+        {/*<Preloader activeHousehold={activeHousehold} households={data} />*/}
         <Providers>
           <div className="min-h-screen flex flex-col justify-between">
             <NavigationBar />

@@ -8,7 +8,7 @@ export default function FormLabel({
 }: LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label
-      className="block dark:text-slate-200 text-slate-700 text-sm font-bold mb-2"
+      className="block text-left dark:text-slate-200 text-slate-700 text-sm font-bold mb-2"
       {...props}
     >
       {children}

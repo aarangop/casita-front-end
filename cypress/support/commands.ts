@@ -29,7 +29,9 @@
 declare global {
   namespace Cypress {
     interface Chainable {
-      dataCy(value: string): Chainable<Element>;
+      dataTestId(value: string): Chainable<Element>;
+
+      fillHouseholdDetails(): Chainable<Element>;
 
       // interceptRequest(method: Method): Chainable<null>;
 
@@ -51,8 +53,8 @@ declare global {
   }
 }
 
-Cypress.Commands.add("dataCy", (value) => {
-  cy.get(`[data-cy=${value}`);
+Cypress.Commands.add("dataTestId", (value) => {
+  cy.get(`[data-testid=${value}`);
 });
 
 // Cypress.Commands.add("interceptRequest", (method) => {

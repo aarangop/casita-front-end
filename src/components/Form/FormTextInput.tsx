@@ -6,18 +6,31 @@ import { FieldError, UseFormRegisterReturn } from "react-hook-form"; // interfac
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   register: UseFormRegisterReturn;
   error?: FieldError;
+  dataTestId?: string;
 }
 
-export default function FormTextInput({ register, error }: FormInputProps) {
+export default function FormTextInput({
+  register,
+  error,
+  defaultValue,
+  dataTestId,
+}: FormInputProps) {
   return (
     <div>
       <input
+        data-testid={dataTestId}
+        defaultValue={defaultValue}
         className={`appearance-none ${
           error ? "bg-error bg-opacity-20 border-error" : null
-        } dark:text-slate-50 border rounded w-full py-2 px-3 text-gray-700 leading-tight`}
+        } dark:bg-dark-3 border rounded w-full py-2 px-3 dark:text-light-2 text-dark-1 leading-tight`}
         {...register}
       />
-      {error && <p className="text-error">{error.message}</p>}
+      <p
+        data-testid={`${dataTestId}-error`}
+        className="text-error h-4 mb-2 text-left"
+      >
+        {error?.message}
+      </p>
     </div>
   );
 }

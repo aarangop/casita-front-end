@@ -1,10 +1,8 @@
-"use client";
-
 import ActionButton, {
   ActionButtonProps,
 } from "@/components/Button/ActionButton";
 
-export function PrimaryButton({
+export function DestructorButton({
   children,
   className,
   dataTestId,
@@ -13,7 +11,7 @@ export function PrimaryButton({
   return (
     <ActionButton
       dataTestId={dataTestId}
-      className={`rounded-full px-4 py-2 bg-emerald-700 hover:bg-emerald-600 hover:cursor-pointer  ${className}`}
+      className={`rounded-full px-4 py-2 bg-error hover:opacity-60 hover:cursor-pointer  ${className}`}
       {...rest}
     >
       {children}

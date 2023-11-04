@@ -19,7 +19,7 @@ import "./commands";
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 import {mount} from "cypress/react";
-import "cypress-react-selector";
+// import "cypress-react-selector";
 import {store} from "@/store"; // Augment the Cypress namespace to include type definitions for
 
 // Augment the Cypress namespace to include type definitions for

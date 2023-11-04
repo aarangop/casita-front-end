@@ -8,8 +8,8 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import FormTextInput from "@/components/Form/FormTextInput";
-import {Household, useCreateHouseholdMutation, useDeleteHouseholdMutation,} from "@/store/casitaApi";
-import HouseholdMemberSelect from "@/components/Household/HouseholdMemberSelect";
+import {Household, useCreateHouseholdMutation} from "@/store/casitaApi";
+import HouseholdMemberSelect from "@/features/Household/HouseholdMemberSelect";
 import {setSelectedHousehold} from "@/store/features/householdSlice";
 
 // Define a validation schema for Household
@@ -39,7 +39,6 @@ export default function HouseholdAddEdit({
     resolver: zodResolver(newHouseholdValidationSchema),
     defaultValues: selectedHousehold || undefined,
   });
-  const [deleteHouseholdMutation] = useDeleteHouseholdMutation();
   const [createNewHousehold] = useCreateHouseholdMutation();
 
   // Redux dispatcher and selectors
@@ -70,13 +69,6 @@ export default function HouseholdAddEdit({
     });
   };
 
-  const deleteHousehold = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (selectedHousehold?.id) {
-      deleteHouseholdMutation({ id: selectedHousehold.id });
-    }
-  };
-
   // Form is rendered initially without the default values.
   // Need to reset the form when the default value changes for the fields to be populated.
   useEffect(() => {
@@ -85,7 +77,12 @@ export default function HouseholdAddEdit({
 
   return (
     <div className="flex flex-col min-w-full shadow-md rounded p-4 space-y-2">
-      <h1 className="font-semibold">{formHeader}</h1>
+      <h1
+        className="font-semibold"
+        data-testid="household-add-edit-selected-household"
+      >
+        {formHeader}
+      </h1>
       <form
         className="flex flex-col min-h-full p-4"
         onSubmit={handleSubmit(onSubmit)}
@@ -140,19 +137,13 @@ export default function HouseholdAddEdit({
         </div>
         <div className="flex flex-row space-x-4">
           <PrimaryButton
-            dataCy="save-household-button"
+            dataTestId="save-household-button"
             className="w-fit"
             type="submit"
           >
             Save
           </PrimaryButton>
-          <PrimaryButton
-            dataCy="delete-household-button"
-            className="bg-error"
-            onClick={deleteHousehold}
-          >
-            Delete
-          </PrimaryButton>
+          {/*<DeleteHouseholdButton household={null}></DeleteHouseholdButton>*/}
         </div>
       </form>
       <hr className="mb-4" />

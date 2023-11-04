@@ -7,12 +7,12 @@
       "esnext"
     ],
     "types": [
-      "jest"
+      "jest",
+      "@testing-library/jest-dom"
     ],
     "strict": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -40,10 +40,12 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "jest.config.mjs"
   ],
   "exclude": [
     "node_modules",
-    "src/*.test.ts"
+    "src/*.test.ts",
+    "cypress.config.ts"
   ]
 }

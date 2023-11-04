@@ -25,10 +25,10 @@ export default function HouseholdListItem({
       dispatch(setSelectedHousehold(household));
     }
   };
-
   return (
     <button
       onClick={handleClick}
+      data-testid={`household-item-button-${household.id}`}
       className={`grow flex flex-row w-full items-center p-4 ${
         selectedHousehold?.id === household.id ? "bg-lime-200" : "bg-tertiary"
       } rounded-lg my-2 hover:bg-lime-100 hover:cursor-pointer`}
