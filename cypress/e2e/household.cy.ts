@@ -14,7 +14,7 @@ describe("Household E2E Tests", () => {
     cy.dataTestId("household-new-household-button").click();
     cy.dataTestId("household-new-household-dialog").should("be.visible");
   });
-
+  it("Checks that the households page form is populated when a household is selected from the household list", () => {});
   it("Creates a new household via the household form", () => {
     cy.dataTestId("household-new-household-button").click();
     cy.dataTestId("household-new-household-dialog")

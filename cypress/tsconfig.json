@@ -10,12 +10,12 @@
     "types": [
       "cypress",
       "node",
-      "./support",
-//      "cypress-react-selector"
+      "./support"
     ]
   },
   "include": [
     "**/*.ts",
+    "**/*.cy.ts",
     "../node_modules/cypress"
   ]
 }

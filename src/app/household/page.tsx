@@ -63,14 +63,12 @@ export default function HouseholdRoot() {
   );
   return (
     <main className="flex grow flex-row p-4 min-h-full space-x-2">
-      <div className="flex flex-col min-h-full min-w-20 bg-dark-2 p-2 rounded-lg shadow-md">
-        {isSuccess && (
-          <HouseholdList
-            className="flex-grow min-w-[20]"
-            activeHousehold={activeHousehold}
-            households={households || []}
-          ></HouseholdList>
-        )}
+      <div className="flex flex-col min-h-full min-w-[50] bg-dark-2 p-2 rounded-lg shadow-md">
+        <HouseholdList
+          className="flex-grow"
+          activeHousehold={activeHousehold}
+          households={households || []}
+        ></HouseholdList>
         <NewHouseholdButton
           dataTestId="household-new-household-button"
           onClick={() => {

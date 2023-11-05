@@ -7,6 +7,10 @@ function ActiveHouseholdMarker() {
   return <div className="rounded-full bg-primary w-3 h-3 m-2" />;
 }
 
+export function householdListItemDisplayText(household: Household): string {
+  return `${household.street} ${household.houseNumber} - ${household.city}`;
+}
+
 export default function HouseholdListItem({
   household,
   isActiveHousehold = false,
@@ -33,7 +37,9 @@ export default function HouseholdListItem({
         selectedHousehold?.id === household.id ? "bg-lime-200" : "bg-tertiary"
       } rounded-lg my-2 hover:bg-lime-100 hover:cursor-pointer`}
     >
-      <h3 className="text-left flex-grow dark:text-slate-900">{`${household.street} ${household.houseNumber} - ${household.city}`}</h3>
+      <h3 className="text-left flex-grow dark:text-slate-900">
+        {householdListItemDisplayText(household)}
+      </h3>
       {isActiveHousehold ? <ActiveHouseholdMarker /> : null}
     </button>
   );

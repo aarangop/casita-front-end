@@ -41,11 +41,12 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "jest.config.mjs"
+    "jest.setup.js"
   ],
   "exclude": [
     "node_modules",
     "src/*.test.ts",
     "cypress.config.ts"
+    //    "cypress/"
   ]
 }
