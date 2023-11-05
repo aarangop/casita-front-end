@@ -1,4 +1,4 @@
-import {MouseEventHandler} from "react";
+import {MouseEventHandler, useEffect} from "react";
 import FormLabel from "@/components/Form/FormLabel";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -42,11 +42,18 @@ export default function HouseholdForm({
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<HouseholdSchema>({
     resolver: zodResolver(newHouseholdValidationSchema),
     defaultValues: household,
   });
-
+  useEffect(() => {
+    setValue("street", household?.street || "");
+    setValue("houseNumber", household?.houseNumber || "");
+    setValue("city", household?.city || "");
+    setValue("zipCode", household?.zipCode || "");
+    setValue("country", household?.country || "");
+  }, [household, setValue]);
   const discard: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     reset();
@@ -70,7 +77,6 @@ export default function HouseholdForm({
         <div className="flex flex-col ">
           <FormLabel htmlFor="street">Street</FormLabel>
           <FormTextInput
-            defaultValue={household?.street}
             dataTestId="household-street"
             register={register("street")}
             error={errors.street}
@@ -79,7 +85,6 @@ export default function HouseholdForm({
         <div className="flex flex-col">
           <FormLabel htmlFor="houseNumber">House Number</FormLabel>
           <FormTextInput
-            defaultValue={household?.houseNumber}
             register={register("houseNumber")}
             error={errors.houseNumber}
           />
@@ -88,16 +93,11 @@ export default function HouseholdForm({
       <div className="flex flex-row space-x-2">
         <div className="flex flex-col">
           <FormLabel htmlFor="city">City</FormLabel>
-          <FormTextInput
-            defaultValue={household?.city}
-            register={register("city")}
-            error={errors.city}
-          />
+          <FormTextInput register={register("city")} error={errors.city} />
         </div>
         <div className="flex flex-col">
           <FormLabel htmlFor="zipCode">ZIP Code</FormLabel>
           <FormTextInput
-            defaultValue={household?.zipCode}
             register={register("zipCode")}
             error={errors.zipCode}
           />
@@ -107,7 +107,6 @@ export default function HouseholdForm({
         <div className="flex flex-col">
           <FormLabel htmlFor="country">Country</FormLabel>
           <FormTextInput
-            defaultValue={household?.country}
             register={register("country")}
             error={errors.country}
           />

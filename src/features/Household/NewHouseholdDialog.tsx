@@ -20,10 +20,13 @@ export default function NewHouseholdDialog({
   const [createHousehold, result] = useCreateHouseholdMutation();
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<HouseholdSchema> = async (data) => {
-    const res = await createHousehold({
-      household: data,
+    createHousehold({
+      household: {
+        householdMembers: [],
+        ...data,
+      },
     });
-    dispatch(setSelectedHousehold(res.data));
+    if (result) dispatch(setSelectedHousehold(result.data!));
     onClose();
   };
 
