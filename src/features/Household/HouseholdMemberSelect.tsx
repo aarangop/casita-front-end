@@ -25,9 +25,11 @@ interface HouseholdMemberOption {
 const animatedComponents = makeAnimated();
 export default function HouseholdMemberSelect({
   household,
+  isDisabled,
   className = "",
 }: {
   household: Household;
+  isDisabled: boolean;
   className?: string;
 }) {
   const memberUsers = useAppSelector(
@@ -56,7 +58,7 @@ export default function HouseholdMemberSelect({
     const userIds = selectedOptions.map((option) => option.value);
     if (household) {
       updateHouseholdMembers({
-        id: household.id,
+        id: household.id!!,
         body: userIds,
       })
         .then(
@@ -80,6 +82,7 @@ export default function HouseholdMemberSelect({
       value={memberUsers}
       loadOptions={loadOptions}
       cacheOptions
+      isDisabled
       onChange={onChange}
     />
   );

@@ -129,38 +129,42 @@ export default function HouseholdForm({
           />
         </div>
       </div>
-      <div className="flex min-w-full space-x-2 justify-end">
-        <PrimaryButton
-          disabled={!household}
-          role="save-household"
-          className="w-32"
-          type="submit"
-          dataTestId="household-new-household-dialog-save-button"
-        >
-          Save
-        </PrimaryButton>
-        {onDiscard && (
-          <DestructorButton
-            role="discard-household-changes"
-            disabled={!isDirty}
-            className="w-32"
-            onClick={discard}
-            dataTestId={"household-new-household-dialog-discard-button"}
-          >
-            Discard
-          </DestructorButton>
-        )}
-        {onDelete && (
-          <DestructorButtonSecondary
-            role="delete-household"
+      <div className="flex min-w-full space-x-2">
+        <div className="flex flex-row space-x-2 justify-start grow-0">
+          <PrimaryButton
             disabled={!household}
+            role="save-household"
             className="w-32"
-            onClick={handleDelete}
-            dataTestId="household-new-household-dialog-delete-button"
+            type="submit"
+            dataTestId="household-new-household-dialog-save-button"
           >
-            Delete
-          </DestructorButtonSecondary>
-        )}
+            Save
+          </PrimaryButton>
+          {onDiscard && (
+            <DestructorButton
+              role="discard-household-changes"
+              disabled={!isDirty}
+              className="w-32"
+              onClick={discard}
+              dataTestId={"household-new-household-dialog-discard-button"}
+            >
+              Discard
+            </DestructorButton>
+          )}
+        </div>
+        <div className="flex grow justify-end">
+          {onDelete && (
+            <DestructorButtonSecondary
+              role="delete-household"
+              disabled={!household}
+              className="w-32"
+              onClick={handleDelete}
+              dataTestId="household-new-household-dialog-delete-button"
+            >
+              Delete
+            </DestructorButtonSecondary>
+          )}
+        </div>
       </div>
     </form>
   );
