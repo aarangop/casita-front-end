@@ -26,7 +26,7 @@ afterAll(() => server.close());
 describe("HouseholdList", () => {
   it("Renders the households from server", () => {
     const households = [household1, household2];
-    const component = renderWithProviders(
+    renderWithProviders(
       <HouseholdList households={households} activeHousehold={null} />,
     );
     households.forEach((household) => {

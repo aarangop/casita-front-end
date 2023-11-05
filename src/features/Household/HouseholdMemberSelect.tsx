@@ -82,7 +82,7 @@ export default function HouseholdMemberSelect({
       value={memberUsers}
       loadOptions={loadOptions}
       cacheOptions
-      isDisabled
+      isDisabled={isDisabled}
       onChange={onChange}
     />
   );

@@ -17,7 +17,7 @@ import { setSelectedHousehold } from "@/store/features/householdSlice";
 import HouseholdMemberSelect from "@/features/Household/HouseholdMemberSelect";
 
 export default function HouseholdRoot() {
-  const { data: households, isSuccess } = useGetHouseholdsQuery();
+  const { data: households } = useGetHouseholdsQuery();
   const [newHouseholdDialogIsOpen, setNewHouseholdDialogIsOpen] =
     useState(false);
 
@@ -32,11 +32,9 @@ export default function HouseholdRoot() {
 
   const [triggerUpdateHousehold, updateHouseholdResult] =
     usePutHouseholdMutation();
-  const [triggerDeleteHousehold, deleteHouseholdResult] =
-    useDeleteHouseholdMutation();
+  const [triggerDeleteHousehold] = useDeleteHouseholdMutation();
   const saveHousehold = async (data: HouseholdSchema) => {
     if (selectedHousehold) {
-      console.log(selectedHousehold.id);
       const res = await triggerUpdateHousehold({
         id: selectedHousehold.id!!,
         household: {
@@ -44,9 +42,8 @@ export default function HouseholdRoot() {
           ...data,
         },
       });
-      if (res && "data" in res) {
-        console.log(res.data);
-        dispatch(setSelectedHousehold(res.data));
+      if (updateHouseholdResult.data) {
+        dispatch(setSelectedHousehold(updateHouseholdResult.data));
       }
     }
   };

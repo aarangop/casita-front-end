@@ -40,7 +40,7 @@ export default function HouseholdForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty },
     reset,
     setValue,
   } = useForm<HouseholdSchema>({
