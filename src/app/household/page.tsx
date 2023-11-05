@@ -35,7 +35,7 @@ export default function HouseholdRoot() {
   const [triggerDeleteHousehold] = useDeleteHouseholdMutation();
   const saveHousehold = async (data: HouseholdSchema) => {
     if (selectedHousehold) {
-      const res = await triggerUpdateHousehold({
+      await triggerUpdateHousehold({
         id: selectedHousehold.id!!,
         household: {
           householdMembers: selectedHousehold.householdMembers,
