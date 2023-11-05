@@ -5,32 +5,13 @@ import HouseholdListItem, {
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { renderWithProviders } from "../utils/test-utils";
-import DeleteHouseholdButton from "@/features/Household/DeleteHouseholdButton";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/dom";
 import HouseholdList from "@/features/Household/HouseholdList";
 import HouseholdRoot from "@/app/household/page";
-import { Household } from "@/store/casitaApi";
+import { household1, household2 } from "../__mocks__/data";
+import DeleteHouseholdButton from "@/features/Household/DeleteHouseholdButton";
 
-const household1 = {
-  id: "42",
-  street: "Test Street",
-  houseNumber: "42",
-  city: "Test City",
-  zipCode: "12345",
-  country: "Test Country",
-  householdMembers: [],
-} as Household;
-
-const household2 = {
-  id: "43",
-  street: "Test Street 2",
-  houseNumber: "",
-  city: "Another City",
-  zipCode: "4343",
-  country: "Another Country",
-  householdMembers: [],
-} as Household;
 export const handlers = [
   rest.get("http://localhost:8001/api/households", (req, res, ctx) => {
     return res(ctx.json([household1, household2]));
@@ -72,8 +53,16 @@ describe("HouseholdListItem", () => {
   });
 });
 
-describe("HouseholdDeleteButton", () => {
-  it("Is disabled when no household is selected", async () => {
+describe("New Household Button", () => {
+  it("Check that a 'new household dialog' is shown when pressed", async () => {
+    const { getByTestId } = renderWithProviders(<HouseholdRoot />);
+    const newHouseholdButton = getByTestId("household-new-household-button");
+    fireEvent.click(newHouseholdButton);
+    expect(getByTestId("household-new-household-dialog")).toBeVisible();
+  });
+});
+describe("Household page HouseholdForm", () => {
+  it("Delete button is disabled when no household is selected", async () => {
     renderWithProviders(
       <DeleteHouseholdButton
         dataTestId={"test-delete-household-button"}
@@ -84,7 +73,7 @@ describe("HouseholdDeleteButton", () => {
     expect(screen.getByRole("button")).toBeDisabled();
   });
 
-  it("Is enabled when a household is selected", async () => {
+  it("Delete button is enabled when a household is selected", async () => {
     renderWithProviders(
       <DeleteHouseholdButton
         household={household1}
@@ -94,16 +83,6 @@ describe("HouseholdDeleteButton", () => {
 
     expect(screen.getByRole("button")).not.toBeDisabled();
   });
-});
-describe("New Household Button", () => {
-  it("Check that a 'new household dialog' is shown when pressed", async () => {
-    const { getByTestId } = renderWithProviders(<HouseholdRoot />);
-    const newHouseholdButton = getByTestId("household-new-household-button");
-    fireEvent.click(newHouseholdButton);
-    expect(getByTestId("household-new-household-dialog")).toBeVisible();
-  });
-});
-describe("Household page HouseholdForm", () => {
   it("Checks that the household form is populated when a household is selected from the household list", async () => {
     renderWithProviders(<HouseholdRoot />);
     const household1Button = await screen.findByText(

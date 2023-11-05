@@ -14,10 +14,14 @@ export default function FormTextInput({
   error,
   defaultValue,
   dataTestId,
+  role,
+  ...rest
 }: FormInputProps) {
   return (
     <div>
       <input
+        {...rest}
+        role={role}
         data-testid={dataTestId}
         defaultValue={defaultValue}
         className={`appearance-none ${
@@ -27,6 +31,7 @@ export default function FormTextInput({
       />
       <p
         data-testid={`${dataTestId}-error`}
+        role={`${role}-error-message`}
         className="text-error h-4 mb-2 text-left"
       >
         {error?.message}

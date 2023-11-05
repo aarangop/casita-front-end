@@ -1,4 +1,4 @@
-import {MouseEventHandler, useEffect} from "react";
+import {MouseEventHandler, useCallback, useEffect} from "react";
 import FormLabel from "@/components/Form/FormLabel";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -40,34 +40,43 @@ export default function HouseholdForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     reset,
     setValue,
   } = useForm<HouseholdSchema>({
     resolver: zodResolver(newHouseholdValidationSchema),
     defaultValues: household,
   });
-  useEffect(() => {
+
+  const resetValues = useCallback(() => {
     setValue("street", household?.street || "");
     setValue("houseNumber", household?.houseNumber || "");
     setValue("city", household?.city || "");
     setValue("zipCode", household?.zipCode || "");
     setValue("country", household?.country || "");
   }, [household, setValue]);
+
+  useEffect(() => {
+    resetValues();
+  }, [household, resetValues]);
+
   const discard: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
-    reset();
+    resetValues();
     if (onDiscard) onDiscard();
   };
+
   const submit: SubmitHandler<HouseholdSchema> = (data) => {
     reset();
     onSubmit(data);
   };
+
   const handleDelete: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     reset();
     if (onDelete) onDelete();
   };
+
   return (
     <form
       className={`flex flex-col space-y-10 dark:bg-dark-2 p-2 w-fit rounded-lg ${className}`}
@@ -77,6 +86,7 @@ export default function HouseholdForm({
         <div className="flex flex-col ">
           <FormLabel htmlFor="street">Street</FormLabel>
           <FormTextInput
+            role="street-input"
             dataTestId="household-street"
             register={register("street")}
             error={errors.street}
@@ -85,6 +95,7 @@ export default function HouseholdForm({
         <div className="flex flex-col">
           <FormLabel htmlFor="houseNumber">House Number</FormLabel>
           <FormTextInput
+            role="house-number-input"
             register={register("houseNumber")}
             error={errors.houseNumber}
           />
@@ -93,11 +104,16 @@ export default function HouseholdForm({
       <div className="flex flex-row space-x-2">
         <div className="flex flex-col">
           <FormLabel htmlFor="city">City</FormLabel>
-          <FormTextInput register={register("city")} error={errors.city} />
+          <FormTextInput
+            role="city-input"
+            register={register("city")}
+            error={errors.city}
+          />
         </div>
         <div className="flex flex-col">
           <FormLabel htmlFor="zipCode">ZIP Code</FormLabel>
           <FormTextInput
+            role="zip-code-input"
             register={register("zipCode")}
             error={errors.zipCode}
           />
@@ -107,6 +123,7 @@ export default function HouseholdForm({
         <div className="flex flex-col">
           <FormLabel htmlFor="country">Country</FormLabel>
           <FormTextInput
+            role="country-input"
             register={register("country")}
             error={errors.country}
           />
@@ -114,6 +131,8 @@ export default function HouseholdForm({
       </div>
       <div className="flex min-w-full space-x-2 justify-end">
         <PrimaryButton
+          disabled={!household}
+          role="save-household"
           className="w-32"
           type="submit"
           dataTestId="household-new-household-dialog-save-button"
@@ -122,6 +141,8 @@ export default function HouseholdForm({
         </PrimaryButton>
         {onDiscard && (
           <DestructorButton
+            role="discard-household-changes"
+            disabled={!isDirty}
             className="w-32"
             onClick={discard}
             dataTestId={"household-new-household-dialog-discard-button"}
@@ -131,6 +152,8 @@ export default function HouseholdForm({
         )}
         {onDelete && (
           <DestructorButtonSecondary
+            role="delete-household"
+            disabled={!household}
             className="w-32"
             onClick={handleDelete}
             dataTestId="household-new-household-dialog-delete-button"

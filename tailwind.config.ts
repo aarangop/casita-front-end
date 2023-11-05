@@ -11,11 +11,13 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#3B7D62",
+        "primary-darker": "#244D3C",
         secondary: "#77BFA3",
         tertiary: "#BFD8BD",
         third: "#BFd19d",
         warning: "#F1D697",
         error: "#EE5E67",
+        "error-darker": "#D43F48",
         "light-1": "#E8F3F1",
         "light-2": "#CFDBD9",
         "light-3": "#A2ADAB",

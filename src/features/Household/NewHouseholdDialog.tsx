@@ -44,6 +44,14 @@ export default function NewHouseholdDialog({
             onDiscard={onClose}
             onSubmit={onSubmit}
             onDelete={null}
+            household={{
+              street: "",
+              houseNumber: "",
+              city: "",
+              zipCode: "",
+              country: "",
+              householdMembers: [],
+            }}
           />
         </div>
       </div>

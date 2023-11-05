@@ -11,7 +11,8 @@ export function DestructorButton({
   return (
     <ActionButton
       dataTestId={dataTestId}
-      className={`rounded-full px-4 py-2 bg-error hover:opacity-60 hover:cursor-pointer  ${className}`}
+      className={`transition-all 
+      rounded-full px-4 py-2 bg-error hover:bg-error-darker hover:cursor-pointer disabled:opacity-70 disabled:hover:bg-error disabled:hover:cursor-not-allowed  ${className}`}
       {...rest}
     >
       {children}
