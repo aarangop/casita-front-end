@@ -15,12 +15,12 @@ export default function ActionButton({
 }: ActionButtonProps) {
   return (
     <button
-      className={`flex flex-row items-center justify-center rounded-lg px-4 py-2 font-semibold ${className}`}
+      className={`flex flex-row items-center rounded-lg px-4 py-2 font-semibold ${className}`}
       data-testid={dataTestId}
       {...rest}
     >
-      {children}
       {icon}
+      {children}
     </button>
   );
 }

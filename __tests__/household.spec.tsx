@@ -8,7 +8,7 @@ import { renderWithProviders } from "../utils/test-utils";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/dom";
 import HouseholdList from "@/features/Household/HouseholdList";
-import HouseholdRoot from "@/app/household/page";
+import HouseholdRoot from "@/app/mycasita/household/page";
 import { household1, household2 } from "../__mocks__/data";
 import DeleteHouseholdButton from "@/features/Household/DeleteHouseholdButton";
 

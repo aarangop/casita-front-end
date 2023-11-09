@@ -24,7 +24,7 @@ export default function FormTextInput({
         role={role}
         data-testid={dataTestId}
         defaultValue={defaultValue}
-        className={`appearance-none ${
+        className={`appearance-none shadow-dark-1 shadow ${
           error ? "bg-error bg-opacity-20 border-error" : null
         } dark:bg-dark-3 rounded-lg w-full py-2 px-3 dark:text-light-2 text-dark-1 leading-tight`}
         {...register}

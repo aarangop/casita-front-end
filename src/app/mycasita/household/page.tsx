@@ -88,18 +88,6 @@ export default function HouseholdRoot() {
         </div>
         <div className="flex flex-col flex-grow">
           <h2 className="h-4 mb-4 font-semibold">Household Members</h2>
-          {/*<div className="flex flex-wrap">*/}
-          {/*  {selectedHousehold?.householdMembers.map((member) => (*/}
-          {/*    <Pill*/}
-          {/*      key={`household-member-pill-${member.id}`}*/}
-          {/*      text={member.nickname}*/}
-          {/*    />*/}
-          {/*  ))}*/}
-          {/*</div>*/}
-          {/*<div className="relative rounded-lg bg-dark-4 items-center w-full">*/}
-          {/*  <FaMagnifyingGlass className="w-4 absolute top-[50%] left-2 box-border bg-none translate-y-[-50%]" />*/}
-          {/*  <input className="pl-8 box-border bg-transparent w-full focus:border-none"></input>*/}
-          {/*</div>*/}
           <HouseholdMemberSelect
             household={selectedHousehold!!}
             isDisabled={!!selectedHousehold}

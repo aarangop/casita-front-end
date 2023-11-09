@@ -1,32 +1,26 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import React from "react";
 import { Inter } from "next/font/google";
-import React, { ReactNode } from "react";
 import { Providers } from "@/app/providers";
-import NavigationBar from "@/components/NavigationBar/NavigationBar";
+
+export const metadata = {
+  title: "Casita",
+  description: "My household management app",
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Casita",
-};
-
-export interface ILayoutProps {
-  children: ReactNode;
-}
-
-export default async function RootLayout(props: ILayoutProps) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={`${inter.className} dark:bg-dark-1`} id="root">
-        {/*Funnel state through the Preloader component!*/}
-        {/*<Preloader activeHousehold={activeHousehold} households={data} />*/}
-        <Providers>
-          <div className="min-h-screen flex flex-col justify-between">
-            <NavigationBar />
-            {props.children}
-          </div>
-        </Providers>
+      <body className={`${inter.className}`} id="root">
+        {/*<div >*/}
+        <Providers>{children}</Providers>
+        {/*</div>*/}
       </body>
     </html>
   );
