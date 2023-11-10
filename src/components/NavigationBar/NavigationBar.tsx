@@ -7,9 +7,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { Avatar } from "@/components/Avatar/Avatar";
 
 export default function NavigationBar() {
-  // const session = await getSession();
-  // const user = session?.user;
-  const { user, isLoading, error } = useUser();
+  const { user } = useUser();
   return (
     <div className="flex flex-col sticky top-0 max-h-24 dark:bg-dark-1 bg-light-1">
       <div className="flex flex-row p-2 items-center justify-between bg-gradient-to-br">
