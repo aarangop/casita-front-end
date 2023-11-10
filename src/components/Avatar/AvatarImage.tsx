@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
+import { UserProfile } from "@auth0/nextjs-auth0/client";
 
 export let avatarColors = [
   "#1abc9c",
@@ -72,19 +73,20 @@ function getLetterAvatar(name: string, size: number): string | null {
 }
 
 export function AvatarImage({
-  fullName,
+  user,
   width,
 }: {
-  fullName: string;
+  user: UserProfile;
   width: number;
 }) {
-  const [avatarUrl, setAvatarUrl] = useState("");
+  if (!user.picture) return <div></div>;
 
-  useEffect(() => {
-    const avatarUrl = getLetterAvatar(fullName, width);
-    setAvatarUrl(avatarUrl ? avatarUrl : "");
-  }, [fullName, width]);
-  if (!avatarUrl) return <div></div>;
-
-  return <Image src={avatarUrl} alt={fullName} width={width} height={width} />;
+  return (
+    <Image
+      src={user.picture}
+      alt={user.nickname || ""}
+      width={width}
+      height={width}
+    />
+  );
 }

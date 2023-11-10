@@ -13,13 +13,15 @@ const injectedRtkApi = api
         GetHouseholdByIdApiResponse,
         GetHouseholdByIdApiArg
       >({
-        query: (queryArg) => ({ url: `/api/households/${queryArg.id}` }),
+        query: (queryArg) => ({
+          url: `/api/private/households/${queryArg.id}`,
+        }),
         providesTags: ["households-controller"],
       }),
       putHousehold: build.mutation<PutHouseholdApiResponse, PutHouseholdApiArg>(
         {
           query: (queryArg) => ({
-            url: `/api/households/${queryArg.id}`,
+            url: `/api/private/households/${queryArg.id}`,
             method: "PUT",
             body: queryArg.household,
           }),
@@ -31,7 +33,7 @@ const injectedRtkApi = api
         DeleteHouseholdApiArg
       >({
         query: (queryArg) => ({
-          url: `/api/households/${queryArg.id}`,
+          url: `/api/private/households/${queryArg.id}`,
           method: "DELETE",
         }),
         invalidatesTags: ["households-controller"],
@@ -41,7 +43,7 @@ const injectedRtkApi = api
         UpdateHouseholdMembersApiArg
       >({
         query: (queryArg) => ({
-          url: `/api/households/${queryArg.id}/household_members`,
+          url: `/api/private/households/${queryArg.id}/household_members`,
           method: "PUT",
           body: queryArg.body,
         }),
@@ -49,7 +51,7 @@ const injectedRtkApi = api
       }),
       getHouseholds: build.query<GetHouseholdsApiResponse, GetHouseholdsApiArg>(
         {
-          query: () => ({ url: `/api/households` }),
+          query: () => ({ url: `/api/private/households` }),
           providesTags: ["households-controller"],
         }
       ),
@@ -58,18 +60,18 @@ const injectedRtkApi = api
         CreateHouseholdApiArg
       >({
         query: (queryArg) => ({
-          url: `/api/households`,
+          url: `/api/private/households`,
           method: "POST",
           body: queryArg.household,
         }),
         invalidatesTags: ["households-controller"],
       }),
       getUsers: build.query<GetUsersApiResponse, GetUsersApiArg>({
-        query: () => ({ url: `/api/users` }),
+        query: () => ({ url: `/api/admin/users` }),
         providesTags: ["users-controller"],
       }),
       getUserById: build.query<GetUserByIdApiResponse, GetUserByIdApiArg>({
-        query: (queryArg) => ({ url: `/api/users/${queryArg.id}` }),
+        query: (queryArg) => ({ url: `/api/admin/users/${queryArg.id}` }),
         providesTags: ["users-controller"],
       }),
       getUsersByUsernameOrEmail: build.query<
@@ -77,7 +79,7 @@ const injectedRtkApi = api
         GetUsersByUsernameOrEmailApiArg
       >({
         query: (queryArg) => ({
-          url: `/api/users/email_or_username/`,
+          url: `/api/admin/users/email_or_username/`,
           params: { term: queryArg.term },
         }),
         providesTags: ["users-controller"],
